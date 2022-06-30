@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Poke Search</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col text-center">
+                <h1 class="text-title">POKE SEARCH</h1>
+            </div>
+        </div>
+        <div class="despliegue">
+            <div class="row lienzo border-corner">
+                <div class="col px-3 py-2">
+                    <div class="row">
+                        <div class="col">
+                            <div class="group space-group">
+                                <h3 id="pk_count">Pokemones registrados:  </h3>
+                                <div class="group">
+                                    <div class="search-container">
+                                        <input id="pk-search" type="search" placeholder="Buscar Pokemon">
+                                        <button type="button" id="pk-btn-search"><ion-icon name="search-outline"></ion-icon></button>
+                                    </div>
+                                    <div class="filter-container">
+                                        <button type="button" id="pk-btn-filter"><ion-icon name="filter-outline"></ion-icon></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FILTROS (EN CONSTRUCCION) -->
+            <div class="border-corner" id="pk-filter-container">
+                <div class="col px-3 py-2">
+                    <h3>Filtros</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row pk-lienzo border-corner mt-2 mb-3">
+            <div class="col px-3 py-2" id="pk_data_cont">
+                <div class="pk-data-cont">
+                </div>
+            </div>
+        </div>
+        <div class="row mb-5">
+            <div class="col">
+                <div class="group" id="pages"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/index.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+.max-height{
+    height: 870px;
+}
+
+.lienzo{
+    background: var(--text-blue-two);
+    border: 2px black solid;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.lienzo-more{
+    background: var(--text-orang);
+    border: 2px black solid;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.lienzo-space{
+    
+    margin-right: 10%;
+}
+
+
+.group{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.space-group{
+    justify-content: space-between;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.space-group-stats{
+    justify-content: space-between;
+}
+
+.progress{
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background-color: #ddd;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.bar{
+    position: absolute;
+    height: 100%;
+}
+
+.img-evolution{
+    zoom: 1;
+}
+
+.img-evolution:hover{
+    cursor: pointer;
+    zoom: 1.03;
+}
+
+.btn-more ion-icon{
+    font-size: 50px;
+}
+
+.btn-more {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn-more:hover{
+    background: black;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}

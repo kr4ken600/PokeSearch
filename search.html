@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/search.css">
+    <link rel="stylesheet" href="css/types.css">
+    <title>Pokemon</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Titulo -->
+        <div class="row mb-3">
+            <div class="col text-center">
+                <h1 class="text-title" id="title">POKE SEARCH</h1>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col text-center">
+                <div class="lienzo border-corner">    
+                    <p id="pk-info">INFORMACION RELEVANTE</p>
+                </div>
+            </div>
+        </div>
+        <!-- Contenido -->
+        <div class="row">
+            <!-- IZQ -->
+            <div class="col">
+                <div class="row mb-2">
+                    <div class="col text-center">
+                        <div class="lienzo lienzo-space border-corner">
+                            <h1 id="pk-name">Name</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col text-center">
+                        <div class="lienzo lienzo-space border-corner">
+                            <img id="pk-img" alt="img.png">
+                            <!-- atributo -->
+                            <h2 class="text-center mt-2">TIPO</h2>
+                            <div class="group mb-2" id="pk-element"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col">
+                        <div class="lienzo lienzo-space border-corner">
+                            <h2 class="text-center border-bottom">ESTADÍSTICAS BASE</h2>
+                            <div class="px-2" id="pk-stats"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- DER -->
+            <div class="col">
+                <div class="row max-height">
+                    <div class="col mb-2 lienzo border-corner">
+                        <h1 class="text-center border-bottom">INFORMACIÓN</h1>
+                        
+                        <!-- TIPO -->
+                        <h2 class="text-center mt-2">NATURALEZA</h2>
+                        <div class="group mb-2" id="pk-type"></div>
+
+                        <!-- HABITAD -->
+                        <h2 class="text-center">HABITAD</h2>
+                        <h3 class="text-center mb-2" id="pk-habitad"></h3>
+                        
+                        <!-- ESPECIAL -->
+                        <h2 class="text-center">POKEMON ESPECIAL</h2>
+                        <!-- LEGENDARIO -->
+                        <div class="group space-group">
+                            <h3 class="text-center">LEGENDARIO:</h3>
+                            <h3 class="text-center" id="pk-legend"></h3>
+                        </div>
+                        <!-- MITICO -->
+                        <div class="group space-group mb-2">
+                            <h3 class="text-center">MITICO:</h3>
+                            <h3 class="text-center" id="pk-mythical"></h3>
+                        </div>
+
+                        <!-- TASA DE CRECIMIENTO -->
+                        <h2 class="text-center">TASA DE CRECIMIENTO</h2>
+                        <h3 class="text-center" id="pk-growth-txt"></h3>
+                        <h5 class="text-center mb-2" id="pk-formula"></h5>
+                        <!-- <div class="group mb-2" id="pk-growth"></div> -->
+
+                        <!-- CADENA DE EVOLICION -->
+                        <h2 class="text-center mb-2">CADENA DE EVOLUCIÓN</h2>
+                        <div class="group" id="pk-evolution"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- MAS (EN CONSTRUCCION) -->
+        <!-- <div class="row mb-2">
+            <div class="col lienzo border-corner">
+                <div class="group ">
+                    <div class="col text-center btn-more" id="btn-home"><ion-icon name="home-outline"></ion-icon></div>
+                    <div class="col text-center btn-more" id="btn-home"><ion-icon name="home-outline"></ion-icon></div>
+                    <div class="col text-center btn-more" id="btn-home"><ion-icon name="home-outline"></ion-icon></div>
+                    <div class="col text-center btn-more" id="btn-home"><ion-icon name="home-outline"></ion-icon></div>
+                    <div class="col text-center btn-more" id="btn-home"><ion-icon name="home-outline"></ion-icon></div> 
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <script src="js/search.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
