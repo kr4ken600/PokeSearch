@@ -1,13 +1,15 @@
 //Variables Globales (API)
 var URL_SPECIES = null;
 const URL_IMGS = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+var TYPE_SELECT = []; 
 
 //Parametros de URL
 const parametros = window.location.search;
 const urlParams = new URLSearchParams(parametros);
 
 const urlPage = urlParams.get('page') === null ? '1' : urlParams.get('page');
-var urlName = urlParams.get('name') === null ? null : urlParams.get('name');
+const urlName = urlParams.get('name') === null ? null : urlParams.get('name');
+const urlType = urlParams.get('types') === null ? null : urlParams.get('types');
 
 if(urlPage === '1'){
     URL_SPECIES = "https://pokeapi.co/api/v2/pokemon-species";
@@ -17,20 +19,57 @@ if(urlPage === '1'){
     URL_SPECIES = `https://pokeapi.co/api/v2/pokemon-species?offset=${(parseInt(urlPage)-1)*20}&limit=20`;
 }
 
-if(urlName !== null){
+if(urlName !== null && urlName !== ''){
     URL_SPECIES = `https://pokeapi.co/api/v2/pokemon/${urlName.toLowerCase()}`;
+}
+
+if(urlType !== null){
+    const pkCount = document.getElementById("pk_count");
+    let count = 0;
+    TYPE_SELECT = urlType.split("_");
+    let pk_emblema = document.querySelectorAll(".pk-emblema");
+    TYPE_SELECT.forEach(type => {
+        pk_emblema.forEach(emblema => {
+            if (emblema.dataset.type === type) {
+                emblema.classList.add("pk-emblema-active");
+            }
+        })
+    })
+    fetch("https://pokeapi.co/api/v2/type")
+        .then(data => data.json())
+        .then(res => {
+            TYPE_SELECT.forEach(type => {
+                const url = res.results.filter(rst => rst.name === type);
+                fetch(url[0].url)
+                    .then(data => data.json())
+                    .then(res => {
+                        count += res.pokemon.length;
+                        res.pokemon.forEach(pk => {
+                            fetch(pk.pokemon.url)
+                                .then(data => data.json())
+                                .then(res => {
+                                    if (res.id <= 905) {
+                                        showData(res.id, res.name);
+                                    }
+                                })
+                        });
+                        pkCount.innerHTML = `Pokemones Encontrados: <span class="pk-count">${count}</span>`;
+                    })
+            })
+            
+        })
+        .catch(error => console.error(error));
 }
 
 const pkCount = document.getElementById("pk_count");
 //Peticiones HTTP
-fetch(URL_SPECIES)
+if (urlType === null) {
+    fetch(URL_SPECIES)
     .then(data => data.json())
     .then(res => {
         const pkCount = document.getElementById("pk_count");
         pkCount.innerHTML = res.count !== undefined ? `Pokemones Registrados: <span class="pk-count">${res.count}</span>`  : 'Pokemones Encontrados: <span class="pk-count">1</span>';
 
-        console.log();
-        
         if(urlName === null){
             res.results.forEach(element => {
                 showData(element.url.match(/(\d+)/g)[1], element.name);
@@ -45,6 +84,7 @@ fetch(URL_SPECIES)
         console.error(error); 
         pkCount.innerHTML = "No se encontraron resultados";
     });
+}
 
 const showPages = (previous, next) => {
     const pages = document.getElementById("pages");
@@ -143,8 +183,8 @@ const showData = (index, name) => {
     
     const h4N = document.createElement('h4');
     let noPK = '';
-    if(index.length < 2) noPK = `N.° 00${index}`;
-    else if(index.length > 2) noPK = `N.° ${index}`;
+    if(index < 10) noPK = `N.° 00${index}`;
+    else if(index >= 100 ) noPK = `N.° ${index}`;
     else noPK = `N.° 0${index}`;
     h4N.innerText = noPK;
 
@@ -180,4 +220,38 @@ const pk_btn_filter = document.getElementById("pk-btn-filter");
 pk_btn_filter.onclick = () => {
     const pk_filter_container = document.getElementById("pk-filter-container");
     pk_filter_container.classList.toggle("show-filter");
+}
+
+
+const pk_emblema = document.querySelectorAll(".pk-emblema");
+
+function activeEmblema() {
+    this.classList.toggle('pk-emblema-active');
+    if (TYPE_SELECT.indexOf(this.dataset.type) === 0) {
+        TYPE_SELECT = TYPE_SELECT.filter(type => type !== this.dataset.type);
+    } else TYPE_SELECT.push(this.dataset.type);
+}
+
+
+
+pk_emblema.forEach(emblema => emblema.addEventListener('click', activeEmblema));
+
+const pk_change_filter = document.getElementById("pk-change-filter");
+const pk_clear_filter = document.getElementById("pk-clear-filter");
+
+pk_change_filter.onclick = () => {
+    if (TYPE_SELECT.length > 0) {
+        var type = "";
+        for (let i = 0; i < TYPE_SELECT.length; i++) {
+            TYPE_SELECT.length - i === 1 ? type += `${TYPE_SELECT[i]}` : type += `${TYPE_SELECT[i]}_`;
+        }
+        window.location.search = "types="+type;
+    }
+}
+
+pk_clear_filter.onclick = () => {
+    if (TYPE_SELECT.length > 0) {
+        TYPE_SELECT = [];
+    }
+    window.location.href = "index.html";
 }

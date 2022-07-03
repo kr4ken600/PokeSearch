@@ -23,7 +23,7 @@ if(URL_POKEMON !== null){
             if(result.length > 2 ) flavor_text = result[2].flavor_text;
             if(result.length > 1 ) flavor_text = result[1].flavor_text;
 
-            showInfoIZQ(res.name, res.varieties[0].pokemon.url, flavor_text);
+            showInfoIZQ(res.id, res.name, res.varieties[0].pokemon.url, flavor_text);
             showInfoDer(
                 res.egg_groups, 
                 res.growth_rate,
@@ -35,10 +35,14 @@ if(URL_POKEMON !== null){
         .catch(error => console.error(error));
 }
 
-const showInfoIZQ = (name, status, text) => {
+const showInfoIZQ = (id, name, status, text) => {
     // NOMBRE
     const pk_name = document.getElementById("pk-name");
-    pk_name.innerText = name.toUpperCase();
+    var number = '';
+    if (id < 10) number = `00${id}`;
+    else if(id >= 10 && id < 100) number = `0${id}`;
+    else number = id;
+    pk_name.innerText = `N.° ${number} ${name.toUpperCase()}`;
 
     // ESTADISTICAS
     fetch(status)
@@ -99,7 +103,6 @@ const showInfoIZQ = (name, status, text) => {
 
     // TEXTO
     const pk_info = document.getElementById("pk-info");
-    console.log(text);
     pk_info.innerText = text !== null ? text.replaceAll('\n', ' ') : "Sin Información";
 }
 
@@ -262,8 +265,3 @@ title.style.cursor = "pointer";
 title.addEventListener('click', () => {
     window.location.href = "index.html";
 })
-
-const btn_home = document.getElementById("btn-home");
-btn_home.onclick = () => {
-    window.location.href = "index.html";
-}
