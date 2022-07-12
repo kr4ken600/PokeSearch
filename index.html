@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/types.css">
     <title>Poke Search</title>
 </head>
 <body>
@@ -39,7 +40,98 @@
             <!-- FILTROS (EN CONSTRUCCION) -->
             <div class="border-corner" id="pk-filter-container">
                 <div class="col px-3 py-2">
-                    <h3>Filtros</h3>
+                    <div class="row text-center" style="margin-bottom: 15px;">
+                        <div class="px-3">
+                            <div class="group">
+                                <div class="col pk-emblema" data-type="normal">
+                                    <img src="/imgs/normal.png" alt="normal" class="img-emblema">
+                                    <h6 class="normal">NORMAL</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="fighting">
+                                    <img src="imgs/fighting.png" alt="fighting" class="img-emblema">
+                                    <h6 class="fighting">LUCHA</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="flying">
+                                    <img src="imgs/flying.png" alt="flying" class="img-emblema">
+                                    <h6 class="flying">VOLADOR</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="poison">
+                                    <img src="imgs/poison.png" alt="poison" class="img-emblema">
+                                    <h6 class="poison">VENENO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="ground">
+                                    <img src="imgs/ground.png" alt="ground" class="img-emblema">
+                                    <h6 class="ground">TIERRA</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="rock">
+                                    <img src="imgs/rock.png" alt="rock" class="img-emblema">
+                                    <h6 class="rock">ROCA</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="bug">
+                                    <img src="imgs/bug.png" alt="bug" class="img-emblema">
+                                    <h6 class="bug">INSECTO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="ghost">
+                                    <img src="imgs/ghost.png" alt="ghost" class="img-emblema">
+                                    <h6 class="shadow">FANTASMA</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="steel">
+                                    <img src="imgs/steel.png" alt="steel" class="img-emblema">
+                                    <h6 class="steel">ACERO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="fire">
+                                    <img src="imgs/fire.png" alt="fire" class="img-emblema">
+                                    <h6 class="fire">FUEGO</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center" style="margin-bottom: 15px;">
+                        <div class="px-3">
+                            <div class="group space-group">
+                                <div class="col pk-emblema" data-type="water">
+                                    <img src="imgs/water.png" alt="water" class="img-emblema">
+                                    <h6 class="water">AGUA</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="grass">
+                                    <img src="imgs/grass.png" alt="grass" class="img-emblema">
+                                    <h6 class="grass">HIERVA</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="electric">
+                                    <img src="imgs/electric.png" alt="electric" class="img-emblema">
+                                    <h6 class="electric">ELECTRICO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="psychic">
+                                    <img src="imgs/psychic.png" alt="psychic" class="img-emblema">
+                                    <h6 class="psychic">PSÍQUICO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="ice">
+                                    <img src="imgs/ice.png" alt="ice" class="img-emblema">
+                                    <h6 class="ice">HIELO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="dragon">
+                                    <img src="imgs/dragon.png" alt="dragon" class="img-emblema">
+                                    <h6 class="dragon">DRAGON</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="dark">
+                                    <img src="imgs/dark.png" alt="dark" class="img-emblema">
+                                    <h6 class="dark">OSCURO</h6>
+                                </div>
+                                <div class="col pk-emblema" data-type="fairy">
+                                    <img src="imgs/fairy.png" alt="fairy" class="img-emblema">
+                                    <h6 class="fairy">HADA</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <div class="group">
+                                <button class="btn-filter" type="button" id="pk-change-filter">Filtrar</button>
+                                <button class="btn-filter" type="button" id="pk-clear-filter">Limpiar Filtros</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
