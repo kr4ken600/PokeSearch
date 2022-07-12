@@ -2,6 +2,7 @@
 var URL_SPECIES = null;
 const URL_IMGS = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 var TYPE_SELECT = []; 
+import httpGet from "./peticiones.js";
 
 //Parametros de URL
 const parametros = window.location.search;
@@ -34,27 +35,24 @@ if(urlType !== null){
                 emblema.classList.add("pk-emblema-active");
             }
         })
-    })
-    fetch("https://pokeapi.co/api/v2/type")
-        .then(data => data.json())
+    });
+    httpGet("https://pokeapi.co/api/v2/type")
         .then(res => {
             TYPE_SELECT.forEach(type => {
                 const url = res.results.filter(rst => rst.name === type);
-                fetch(url[0].url)
-                    .then(data => data.json())
+                httpGet(url[0].url)
                     .then(res => {
                         count += res.pokemon.length;
                         res.pokemon.forEach(pk => {
-                            fetch(pk.pokemon.url)
-                                .then(data => data.json())
+                            httpGet(pk.pokemon.url)
                                 .then(res => {
                                     if (res.id <= 905) {
                                         showData(res.id, res.name);
                                     }
-                                })
+                                });
                         });
                         pkCount.innerHTML = `Pokemones Encontrados: <span class="pk-count">${count}</span>`;
-                    })
+                    });
             })
             
         })
@@ -64,26 +62,25 @@ if(urlType !== null){
 const pkCount = document.getElementById("pk_count");
 //Peticiones HTTP
 if (urlType === null) {
-    fetch(URL_SPECIES)
-    .then(data => data.json())
-    .then(res => {
-        const pkCount = document.getElementById("pk_count");
-        pkCount.innerHTML = res.count !== undefined ? `Pokemones Registrados: <span class="pk-count">${res.count}</span>`  : 'Pokemones Encontrados: <span class="pk-count">1</span>';
+    httpGet(URL_SPECIES)
+        .then(res => {
+            const pkCount = document.getElementById("pk_count");
+            pkCount.innerHTML = res.count !== undefined ? `Pokemones Registrados: <span class="pk-count">${res.count}</span>`  : 'Pokemones Encontrados: <span class="pk-count">1</span>';
 
-        if(urlName === null){
-            res.results.forEach(element => {
-                showData(element.url.match(/(\d+)/g)[1], element.name);
-            });
-    
-            showPages(res.previous, res.next);
-        } else {
-            showData(res.id, res.name);
-        }
-    })
-    .catch(error => {
-        console.error(error); 
-        pkCount.innerHTML = "No se encontraron resultados";
-    });
+            if(urlName === null){
+                res.results.forEach(element => {
+                    showData(element.url.match(/(\d+)/g)[1], element.name);
+                });
+        
+                showPages(res.previous, res.next);
+            } else {
+                showData(res.id, res.name);
+            }
+        })
+        .catch(error => {
+            console.error(error); 
+            pkCount.innerHTML = "No se encontraron resultados";
+        });
 }
 
 const showPages = (previous, next) => {

@@ -1,6 +1,7 @@
 //Variables Globales (API)
 var URL_POKEMON = null;
 const URL_IMGS = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+import httpGet from "./peticiones.js";
 
 //Parametros de URL
 const parametros = window.location.search;
@@ -13,8 +14,7 @@ if(urlID !== '' || isInteger(parseInt(urlID))){
 }
 
 if(URL_POKEMON !== null){
-    fetch(URL_POKEMON)
-        .then(data => data.json())
+    httpGet(URL_POKEMON)
         .then(res => {
             var result = res.flavor_text_entries.filter(element => element.language.name === 'es' );
 
@@ -31,8 +31,7 @@ if(URL_POKEMON !== null){
                 res.is_legendary,
                 res.is_mythical,
                 res.evolution_chain);
-        })
-        .catch(error => console.error(error));
+        }).catch(error => console.error(error));
 }
 
 const showInfoIZQ = (id, name, status, text) => {
@@ -45,8 +44,7 @@ const showInfoIZQ = (id, name, status, text) => {
     pk_name.innerText = `N.° ${number} ${name.toUpperCase()}`;
 
     // ESTADISTICAS
-    fetch(status)
-        .then(data => data.json())
+    httpGet(status)
         .then(res => {
             const pk_stats = document.getElementById("pk-stats");
             
@@ -84,17 +82,16 @@ const showInfoIZQ = (id, name, status, text) => {
             const pk_element = document.getElementById("pk-element");
             
             elements.forEach(element => {
-                fetch(element.type.url)
-                    .then(data => data.json())
+                httpGet(element.type.url)
                     .then(res => {
                         const type = res.names.filter(type => type.language.name === "es")[0].name;
                         const h3Type = document.createElement('h3');
                         h3Type.className = element.type.name;
                         h3Type.innerText = type.toUpperCase();
                         pk_element.appendChild(h3Type);
-                    })
+                    });
             })
-        })
+        });
     
     // IMAGEN
     const pk_img = document.getElementById("pk-img");
@@ -112,8 +109,7 @@ const showInfoDer = (type, growth, habitat, legend, mythical, evolution) => {
     
     type.forEach(element => {
         
-        fetch(element.url)
-            .then(data => data.json())
+        httpGet(element.url)
             .then(res => {
                 let class_type = getTypeClass(res.name);
                 let names = res.names.filter(typeName => typeName.language.name === 'es');
@@ -124,7 +120,7 @@ const showInfoDer = (type, growth, habitat, legend, mythical, evolution) => {
                     h3Type.className = class_type;
 
                     pk_type.appendChild(h3Type);
-               });
+            });
             })
             .catch(error => console.error(error));
     });   
@@ -134,8 +130,7 @@ const showInfoDer = (type, growth, habitat, legend, mythical, evolution) => {
     const h3Growth = document.getElementById('pk-growth-txt');
     h3Growth.innerText = getGrowth(growth.name).toUpperCase();
     
-    fetch(growth.url)
-        .then(data => data.json())
+    httpGet(growth.url)
         .then(res => {
             const pk_formula = document.getElementById("pk-formula");
             pk_formula.innerHTML = `Formula de exp: ${res.formula.replaceAll('\\','')}`;
@@ -145,8 +140,7 @@ const showInfoDer = (type, growth, habitat, legend, mythical, evolution) => {
     // HABITAD
     const pk_habitad = document.getElementById("pk-habitad");
     if(habitat !== null){
-        fetch(habitat)
-            .then(data => data.json())
+        httpGet(habitat)
             .then(res => {
                 let hbt = res.names.filter(element => element.language.name === 'es');
                 pk_habitad.innerText = hbt[0].name.toUpperCase();
@@ -164,62 +158,61 @@ const showInfoDer = (type, growth, habitat, legend, mythical, evolution) => {
 
     // CADENA EVOLUTIVA
     if(evolution !== null){
-        fetch(evolution.url)
-        .then(data => data.json())
-        .then(res => {
-            let pks = [];
+        httpGet(evolution.url)
+            .then(res => {
+                let pks = [];
 
-            pks.push({ 
-                name: res.chain.species.name, 
-                nvl: "base",
-                index: res.chain.species.url.match(/(\d+)/g)[1]
-            });
-
-            if(res.chain.evolves_to.length > 0){
                 pks.push({ 
-                    name: res.chain.evolves_to[0].species.name,
-                    nvl: `Nvl ${res.chain.evolves_to[0].evolution_details[0].min_level}`,
-                    index: res.chain.evolves_to[0].species.url.match(/(\d+)/g)[1]
+                    name: res.chain.species.name, 
+                    nvl: "base",
+                    index: res.chain.species.url.match(/(\d+)/g)[1]
                 });
 
-                if(res.chain.evolves_to[0].evolves_to.length > 0){
+                if(res.chain.evolves_to.length > 0){
                     pks.push({ 
-                        name: res.chain.evolves_to[0].evolves_to[0].species.name, 
-                        nvl: `Nvl ${res.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level}`,
-                        index: res.chain.evolves_to[0].evolves_to[0].species.url.match(/(\d+)/g)[1]
+                        name: res.chain.evolves_to[0].species.name,
+                        nvl: `Nvl ${res.chain.evolves_to[0].evolution_details[0].min_level}`,
+                        index: res.chain.evolves_to[0].species.url.match(/(\d+)/g)[1]
                     });
+
+                    if(res.chain.evolves_to[0].evolves_to.length > 0){
+                        pks.push({ 
+                            name: res.chain.evolves_to[0].evolves_to[0].species.name, 
+                            nvl: `Nvl ${res.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level}`,
+                            index: res.chain.evolves_to[0].evolves_to[0].species.url.match(/(\d+)/g)[1]
+                        });
+                    }
                 }
-            }
-            const pk_evolution = document.getElementById("pk-evolution");
-            
-            pks.forEach(pk => {
-                const col = document.createElement('div');
-                col.className = "text-center pk-evolution-col";
-
-                const h3Name = document.createElement('h3');
-                h3Name.innerText = pk.name.toUpperCase();
-
-                const img = document.createElement('img');
-                img.className = "img-evolution";
-                img.src = `${URL_IMGS}${pk.index}.png`;
-                img.alt = `${pk.index}.png`;
-                img.onclick = () => {
-                    document.location.search = `id=${pk.index}`;
-                }
-
-                const h3Nvl = document.createElement('h3');
-                h3Nvl.innerText = pk.nvl.toUpperCase();
+                const pk_evolution = document.getElementById("pk-evolution");
                 
-                col.appendChild(h3Name);
-                col.appendChild(img);
-                col.appendChild(h3Nvl);
+                pks.forEach(pk => {
+                    const col = document.createElement('div');
+                    col.className = "text-center pk-evolution-col";
 
-                pk_evolution.appendChild(col);
+                    const h3Name = document.createElement('h3');
+                    h3Name.innerText = pk.name.toUpperCase();
+
+                    const img = document.createElement('img');
+                    img.className = "img-evolution";
+                    img.src = `${URL_IMGS}${pk.index}.png`;
+                    img.alt = `${pk.index}.png`;
+                    img.onclick = () => {
+                        document.location.search = `id=${pk.index}`;
+                    }
+
+                    const h3Nvl = document.createElement('h3');
+                    h3Nvl.innerText = pk.nvl.toUpperCase();
+                    
+                    col.appendChild(h3Name);
+                    col.appendChild(img);
+                    col.appendChild(h3Nvl);
+
+                    pk_evolution.appendChild(col);
+                })
+
+                
             })
-
-            
-        })
-        .catch(error => console.error(error));
+            .catch(error => console.error(error));        
     }
 }
 
